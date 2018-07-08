@@ -1,0 +1,17 @@
+{$ADDR}:{$PORT} {
+    root ./project
+    index index.html
+
+    rewrite {
+        if {path} not_starts_with /api
+        to {path} /
+    }
+
+    proxy /api {$BACKEND_ADDR} {
+        transparent
+    }
+
+    tls off
+    log stdout
+    errors stdout
+}
