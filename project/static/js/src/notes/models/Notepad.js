@@ -7,8 +7,6 @@ module.exports = Backbone.Model.extend({
         id: null,
         title: null,
         folder_id: null,
-        created: null,
-        updated: null,
 
         active: false
     },
@@ -20,6 +18,13 @@ module.exports = Backbone.Model.extend({
     type: 'notepad',
     idAttribute: 'id',
     urlRoot: Config.urls.api.notepads,
+
+    parse: function (response, options) {
+        if (options.collection) {
+            return response
+        };
+        return response.data;
+    },
 
     validate: function (attributes) {
         if (!attributes.title) {

@@ -9,8 +9,6 @@ module.exports = Backbone.Model.extend({
         text: null,
         html: null,
         notepad_id: null,
-        created: null,
-        updated: null,
 
         opened: false, // tab is opened (need for the view to fire close event)
         active: false // tab is active
@@ -25,6 +23,13 @@ module.exports = Backbone.Model.extend({
     type: 'note',
     idAttribute: 'id',
     urlRoot: Config.urls.api.notes,
+
+    parse: function (response, options) {
+        if (options.collection) {
+            return response
+        };
+        return response.data;
+    },
 
     validate: function (attributes) {
         if (!attributes.title) {
@@ -42,14 +47,15 @@ module.exports = Backbone.Model.extend({
         // Model is already opened - make it's tab active
         if (that.get('opened')) {
             window.App.collections.editors.openOne(that);
-        // Fetch model and open it in new tab
-        } else {
-            that.fetch({
-                success: function () {
-                    window.App.collections.editors.openOne(that);
-                }
-            });
+            return;
         }
+
+        // Fetch model and open it in new tab
+        that.fetch({
+            success: function () {
+                window.App.collections.editors.openOne(that);
+            }
+        });
     },
 
     close: function () {
