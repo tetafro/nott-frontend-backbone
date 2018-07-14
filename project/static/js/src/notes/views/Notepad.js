@@ -24,27 +24,14 @@ module.exports = Backbone.View.extend({
     },
 
     initialize: function () {
+        // NOTE: Sync, request and error events are propogated to
+        // collection object and handled there to avoid double handling.
+        // This is a valid logic since notepads lives only inside a
+        // collection in this app.
         this.listenTo(this.model, 'change:title', this.rename);
         this.listenTo(this.model, 'change:active', this.onOpen);
-        this.listenTo(this.model, 'request', this.onAjaxStart);
-        this.listenTo(this.model, 'sync', this.onAjaxComplete);
-        this.listenTo(this.model, 'error', this.onError);
         this.listenTo(this.model, 'destroy', this.onDestroy);
-
         this.render();
-    },
-
-    onAjaxStart: function () {
-        window.App.views.base.showLoadIcon();
-    },
-
-    onAjaxComplete: function () {
-        window.App.views.base.hideLoadIcon();
-    },
-
-    onError: function (model, error) {
-        window.App.views.base.hideLoadIcon();
-        window.App.views.base.displayError('error', error);
     },
 
     onDestroy: function () {

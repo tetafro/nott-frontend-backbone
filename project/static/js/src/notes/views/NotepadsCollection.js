@@ -15,7 +15,6 @@ module.exports = Backbone.View.extend({
         this.listenTo(this.collection, 'request', this.onAjaxStart);
         this.listenTo(this.collection, 'sync', this.onAjaxComplete);
         this.listenTo(this.collection, 'error', this.onError);
-
         this.render();
     },
 
@@ -27,9 +26,14 @@ module.exports = Backbone.View.extend({
         window.App.views.base.hideLoadIcon();
     },
 
-    onError: function (collection, error) {
+    onError: function (collection, response, options) {
         window.App.views.base.hideLoadIcon();
-        window.App.views.base.displayError('error', error);
+        var msg = 'Unexpected error';
+        // Proper JSON error from server
+        if ('responseJSON' in response && 'error' in response.responseJSON) {
+            msg = response.responseJSON.error;
+        }
+        window.App.views.base.displayError('error', msg);
     },
 
     onAdd: function (notepad) {
