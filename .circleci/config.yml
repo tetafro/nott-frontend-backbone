@@ -1,0 +1,56 @@
+version: 2
+jobs:
+  build:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - run:
+          name: Get project dependencies
+          command: cd project/static/js && npm install
+      - run:
+          name: Build app
+          command: cd project/static/js && ./node_modules/webpack/bin/webpack.js
+      - persist_to_workspace:
+          root: .
+          paths:
+            - project/static/js/app.min.js
+  test:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - run:
+          name: Install linters
+          command: sudo npm install -g eslint eslint-config-yandex babel-eslint
+      - run:
+          name: Run linters
+          command: eslint ./project/static/js/src
+  publish:
+    docker:
+      - image: circleci/node:8
+    steps:
+      - checkout
+      - attach_workspace:
+          at: ./project/static/js/app.min.js
+      - setup_remote_docker:
+          docker_layer_caching: true
+      - run:
+          name: Build Docker image
+          command: docker build -t tetafro/nott-frontend-backbone .
+      - run:
+          name: Push Docker image to Docker Hub
+          command: |
+            docker login -u $DOCKER_USER -p $DOCKER_PASS
+            docker push tetafro/nott-frontend-backbone:latest
+workflows:
+  version: 2
+  main:
+    jobs:
+      - build
+      - test
+      - publish:
+          requires:
+            - build
+            - test
+          context: dockerhub

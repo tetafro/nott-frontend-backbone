@@ -1,5 +1,7 @@
 # Nott
 
+[![CircleCI](https://circleci.com/gh/tetafro/nott-frontend-backbone.svg?style=shield)](https://circleci.com/gh/tetafro/nott-frontend-backbone)
+
 Markdown notes service with code syntax highlighting.
 
 This repository provides frontend written with Backbone.js framework.

@@ -21,8 +21,8 @@ module.exports = Backbone.Model.extend({
 
     parse: function (response, options) {
         if (options.collection) {
-            return response
-        };
+            return response;
+        }
         return response.data;
     },
 

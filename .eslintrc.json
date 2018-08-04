@@ -2,7 +2,9 @@
     "extends": ["yandex"],
     "parser": "babel-eslint",
     "rules": {
+        "camelcase": 0,
         "eqeqeq": 0,
+        "no-inner-declarations": 0,
         "vars-on-top": 0
     }
 }

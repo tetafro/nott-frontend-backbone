@@ -18,4 +18,4 @@ run:
 
 .PHONY: docker
 docker:
-	docker build -t tetafro/nott-frontend .
+	docker build -t tetafro/nott-frontend-backbone .

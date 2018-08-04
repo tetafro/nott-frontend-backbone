@@ -6,14 +6,6 @@ RUN apk add --no-cache wget ca-certificates && \
     wget -q -O caddy.tar.gz https://caddyserver.com/download/linux/amd64?license=personal && \
     tar -xzf caddy.tar.gz
 
-FROM tetafro/webpack:8 AS build-app
-
-WORKDIR /build
-
-COPY project/static/js .
-
-RUN webpack
-
 FROM alpine:3.7
 
 RUN apk add --no-cache ca-certificates
@@ -23,7 +15,7 @@ WORKDIR /app
 COPY --from=build-caddy /build/caddy /usr/local/bin/caddy
 COPY Caddyfile /etc/
 
-COPY --from=build-app /build/app.min.js static/js/
+COPY project/static/js/app.min.js static/js/
 COPY project/static/css static/css
 COPY project/static/fonts static/fonts
 COPY project/static/images static/images

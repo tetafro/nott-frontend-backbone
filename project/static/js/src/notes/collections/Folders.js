@@ -41,7 +41,7 @@ module.exports = Backbone.Collection.extend({
         folder.set({
             title: title,
             parent_id: parentId
-        })
+        });
         folder.save();
     },
 
