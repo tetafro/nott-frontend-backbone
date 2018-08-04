@@ -23,28 +23,26 @@ module.exports = Backbone.Collection.extend({
 
     createOne: function (title, parentId) {
         var that = this;
-        var folder = new Folder();
+        var folder = new Folder({
+            title: title,
+            parent_id: parentId
+        });
 
-        folder.save(
-            {
-                title: title,
-                parent_id: parentId
-            },
-            {
-                success: function (model, response) {
-                    that.add(model);
-                }
+        folder.save(null, {
+            success: function (model, response, options) {
+                that.add(model);
             }
-        );
+        });
 
         return folder;
     },
 
     editOne: function (folder, title, parentId) {
-        folder.save({
+        folder.set({
             title: title,
             parent_id: parentId
-        });
+        })
+        folder.save();
     },
 
     deleteOne: function (folder) {

@@ -44,8 +44,9 @@ module.exports = Backbone.View.extend({
         var text = that
             .$('#editor-' + that.model.get('id') + ' textarea')
             .val();
-        that.model.save({text: text}, {
-            success: function (model, response) {
+        that.model.set({text: text});
+        that.model.save(null, {
+            success: function (model, response, options) {
                 model.fetch({
                     success: function () {
                         // Update rendered content

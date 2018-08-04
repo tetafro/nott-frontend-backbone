@@ -3,7 +3,6 @@ var $ = require('jquery');
 var Backbone = require('backbone');
 var Config = require('../../config');
 var User = require('../models/User');
-var ErrorView = require('../../base/views/Error');
 var PageTemplate = require('raw-loader!../templates/Profile.html');
 
 module.exports = Backbone.View.extend({
@@ -57,36 +56,33 @@ module.exports = Backbone.View.extend({
 
         that.clearErrors();
 
-        var fields = {
+        that.model.set({
             email: that.$('input[name="email"]').val(),
             password: that.$('input[name="password"]').val()
-        };
+        });
 
-        that.model.save(
-            fields,
-            {
-                success: function (model, response) {
-                    Backbone.history.navigate(Config.urls.pages.profile, true);
-                },
-                error: function (model, response) {
-                    var data = response.responseJSON;
+        that.model.save(null, {
+            success: function (model, response, options) {
+                Backbone.history.navigate(Config.urls.pages.profile, true);
+            },
+            error: function (model, response, options) {
+                var data = response.responseJSON;
 
-                    // Invalid responses
-                    if (typeof data === 'undefined' || !('error' in data)) {
-                        that.addError('Unexpected error');
-                        return;
-                    }
-
-                    that.addError('Error: ' + data.error);
-                },
-                complete: function () {
-                    // Clear model's password field
-                    // NOTE: It will not be rewritten on backend on next
-                    // sync, because password cannnot be empty
-                    that.model.set('password', '');
+                // Invalid responses
+                if (typeof data === 'undefined' || !('error' in data)) {
+                    that.addError('Unexpected error');
+                    return;
                 }
+
+                that.addError('Error: ' + data.error);
+            },
+            complete: function () {
+                // Clear model's password field
+                // NOTE: It will not be rewritten on backend on next
+                // sync, because password cannnot be empty
+                that.model.set('password', '');
             }
-        );
+        });
     },
 
     render: function () {

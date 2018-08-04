@@ -40,7 +40,7 @@ module.exports = Backbone.Collection.extend({
         that.fetch({
             reset: true,
             data: $.param({
-                'notepad-id': notepad.get('id')
+                'notepad_id': notepad.get('id')
             }),
             // Synchronize models with EditorsCollection
             success: function () {
@@ -90,30 +90,25 @@ module.exports = Backbone.Collection.extend({
 
     createOne: function (title, notepadId) {
         var that = this;
-
-        notepadId = this.notepad.get('id');
-
-        var note = new Note();
-        note.save(
-            {
-                title: title,
-                notepad_id: notepadId
-            },
-            {
-                success: function (model, response) {
-                    that.add(model);
-                }
+        var note = new Note({
+            title: title,
+            notepad_id: notepadId
+        });
+        note.save(null, {
+            success: function (model, response, options) {
+                that.add(model);
             }
-        );
+        });
 
         return note;
     },
 
     editOne: function (note, title, notepadId) {
-        note.save({
+        note.set({
             title: title,
             notepad_id: notepadId
         });
+        note.save();
     },
 
     deleteOne: function (note) {

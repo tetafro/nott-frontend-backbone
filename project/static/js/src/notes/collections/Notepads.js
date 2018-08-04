@@ -24,28 +24,26 @@ module.exports = Backbone.Collection.extend({
 
     createOne: function (title, folderId) {
         var that = this;
-        var notepad = new Notepad();
+        var notepad = new Notepad({
+            title: title,
+            folder_id: folderId
+        });
 
-        notepad.save(
-            {
-                title: title,
-                folder_id: folderId
-            },
-            {
-                success: function (model, response) {
-                    that.add(model);
-                }
+        notepad.save(null, {
+            success: function (model, response, options) {
+                that.add(model);
             }
-        );
+        });
 
         return notepad;
     },
 
     editOne: function (notepad, title, folderId) {
-        notepad.save({
+        notepad.set({
             title: title,
             folder_id: folderId
         });
+        notepad.save();
     },
 
     deleteOne: function (notepad) {
