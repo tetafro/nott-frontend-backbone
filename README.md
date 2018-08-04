@@ -6,7 +6,7 @@ This repository provides frontend written with Backbone.js framework.
 
 ## Build and run
 
-Prerequiresites:
+Prerequisites:
 
 * Install [Caddy web server](https://caddyserver.com/download)
 * Install webpack
