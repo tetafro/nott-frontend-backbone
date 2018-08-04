@@ -1,5 +1,5 @@
 {$ADDR}:{$PORT} {
-    root ./project
+    root {$ROOT}
     index index.html
 
     rewrite {
@@ -11,7 +11,7 @@
         transparent
     }
 
-    tls off
+    tls {$TLS}
     log stdout
     errors stdout
 }
