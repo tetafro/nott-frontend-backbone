@@ -2,7 +2,7 @@
 
 Markdown notes service with code syntax highlighting.
 
-This repository provides frontend.
+This repository provides frontend written with Backbone.js framework.
 
 ## Build and run
 
