@@ -1,3 +1,4 @@
 /project/static/js/node_modules/
 /project/static/js/app.min.js
 /.env
+/tmp/
