@@ -1,17 +1,21 @@
-.PHONE: dep
+.PHONY: dep
 dep:
 	@ cd project/static/js && \
 		npm install
 
-.PHONE: lint
+.PHONY: lint
 lint:
 	@ eslint ./project/static/js/src
 
-.PHONE: build
+.PHONY: build
 build:
 	@ cd project/static/js && \
 		./node_modules/webpack/bin/webpack.js
 
-.PHONE: run
+.PHONY: run
 run:
 	@ caddy
+
+.PHONY: docker
+docker:
+	docker build -t tetafro/nott-frontend .
