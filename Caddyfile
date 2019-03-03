@@ -11,7 +11,7 @@
         transparent
     }
 
-    tls {$TLS}
+    tls off
     log stdout
     errors stdout
 }

@@ -24,6 +24,6 @@ COPY project/index.html .
 RUN mkdir .well-known && \
     chmod u+x /usr/local/bin/caddy
 
-EXPOSE 80 443 2015
+EXPOSE 80
 
 CMD ["caddy", "-agree", "-conf", "/etc/Caddyfile"]
