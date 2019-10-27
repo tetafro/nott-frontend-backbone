@@ -33,8 +33,7 @@ jobs:
       - checkout
       - attach_workspace:
           at: ./project/static/js/app.min.js
-      - setup_remote_docker:
-          docker_layer_caching: true
+      - setup_remote_docker
       - run:
           name: Build Docker image
           command: docker build -t tetafro/nott-frontend-backbone .
