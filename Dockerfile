@@ -2,6 +2,8 @@ FROM tetafro/caddy:0.11.4
 
 WORKDIR /app
 
+RUN mkdir -p static/js
+
 COPY Caddyfile /etc/
 COPY project/static/js/app.min.js static/js/
 COPY project/static/css static/css
