@@ -1,11 +1,6 @@
-{$ADDR}:{$PORT} {
+:8080 {
     root {$ROOT}
     index index.html
-
-    rewrite {
-        if {path} not_starts_with /api
-        to {path} /
-    }
 
     proxy /api {$BACKEND_ADDR} {
         transparent
