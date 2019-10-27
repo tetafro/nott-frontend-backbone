@@ -22,10 +22,10 @@ jobs:
       - checkout
       - run:
           name: Install linters
-          command: sudo npm install -g eslint eslint-config-yandex babel-eslint
+          command: npm install eslint eslint-config-yandex babel-eslint
       - run:
           name: Run linters
-          command: eslint ./project/static/js/src
+          command: ./node_modules/eslint/bin/eslint.js ./project/static/js/src
   publish:
     docker:
       - image: circleci/node:8
