@@ -12,7 +12,7 @@
     "bootstrap": "^3.3.7",
     "jquery": "^3.2.1",
     "raw-loader": "^0.5.1",
-    "underscore": "^1.8.3"
+    "underscore": "^1.12.1"
   },
   "devDependencies": {
     "webpack": "^4.15.1",
